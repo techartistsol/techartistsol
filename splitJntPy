@@ -1,0 +1,56 @@
+import maya.cmds as cmds
+#create start and end joints first and set the number of joint for Spine
+numJnts = 7
+startJnt  = 'joint1'
+endJnt = 'joint2'
+
+#create number of joints 
+#get joint positon
+
+sPos = cmds.joint(startJnt, q=True, p=True)
+ePos = cmds.joint(endJnt, q=True, p=True)
+
+#get start joint Orient
+
+ro = cmds.joint(startJnt, q=True, roo=True)
+sao = "yup"
+
+#unparent end joint
+
+cmds.parent(endJnt, world=True)
+
+#joint Vector
+
+jointVector = [0.0, 0.0, 0.0]
+jointVector[0] = (ePos[0] - sPos[0]) / numJnts
+jointVector[1] = (ePos[1] - sPos[1]) / numJnts
+jointVector[2] = (ePos[2] - sPos[2]) / numJnts
+
+#deselect all
+cmds.select(clear=True)
+
+# Loop And Setup Joints
+lastJntCreated = None
+newJnts = []
+for i in range(1, numJnts):
+    # Create Joint
+    jnt = cmds.joint(p=(pPos[0] + (i * jointVector[0]), pPos[1] + (i * jointVector[1]), pPos[2] + (i * jointVector[2])))
+
+    if i == 1:
+        cmds.parent(jnt, startJnt)
+
+    # Set Last Created For Reference (Updates Until Last Iteration)
+    lastJntCreated = jnt
+    newJnts.append(jnt)
+
+# Reparent End Joint
+cmds.parent(endJnt, lastJntCreated)
+
+# Orient Joints
+cmds.joint(lastJntCreated, e=True, oj=ro, secondaryAxisOrient="yup", ch=True, zso=True)
+
+
+
+
+
+ 
