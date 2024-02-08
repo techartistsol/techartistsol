@@ -1,6 +1,6 @@
 import maya.cmds as cmds
 #create start and end joints first and set the number of joint for Spine
-numJnts = 7
+numJnts = 8
 startJnt  = 'joint1'
 endJnt = 'joint2'
 
@@ -34,7 +34,7 @@ lastJntCreated = None
 newJnts = []
 for i in range(1, numJnts):
     # Create Joint
-    jnt = cmds.joint(p=(pPos[0] + (i * jointVector[0]), pPos[1] + (i * jointVector[1]), pPos[2] + (i * jointVector[2])))
+    jnt = cmds.joint(p=(sPos[0] + (i * jointVector[0]), sPos[1] + (i * jointVector[1]), sPos[2] + (i * jointVector[2])))
 
     if i == 1:
         cmds.parent(jnt, startJnt)
