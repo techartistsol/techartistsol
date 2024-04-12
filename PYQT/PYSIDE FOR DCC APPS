@@ -1,0 +1,36 @@
+#HOUDINI 18
+import hou
+def getHoudiniMainWindow():
+    """Get the Houdini main window.
+    
+    Returns:
+        PySide2.QtWidgets.QWidget: 'QWidget' Houdini main window.
+    """
+    return hou.qt.mainWindow()
+
+
+#KATANA 3
+from UI4.App import MainWindow
+def getKatanaMainWindow():
+    """Get the Katana main window.
+    Returns:
+        UI4.App.MainWindow.KatanaWindow: 'KatanaWindow' Katana main window.
+    """
+    return MainWindow.GetMainWindow()
+
+MAYA 2020
+from PySide2 import QtWidgets
+import shiboken2
+import maya.OpenMayaUI as apiUI
+def getMayaMainWindow():
+    """Get the Maya main window.
+    
+    Returns: 
+        PySide2.QtWidgets.QWidget:  'TmainWindow' Maya main window.
+    """
+    ptr = apiUI.MQtUtil.mainWindow()
+    if ptr is not None:
+        return shiboken2.wrapInstance(long(ptr), QtWidgets.QWidget)
+
+
+
